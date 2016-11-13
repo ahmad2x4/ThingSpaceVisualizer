@@ -1,0 +1,87 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../thingSpace-axis/thingSpace-axis.html">
+<link rel="import" href="../thingSpace-thing/thingSpace-thing.html">
+
+<dom-module id="thingSpace-container">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .canvas{
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+           display: block;
+      }
+      .canvas-container{
+        width:100%;
+      }
+    </style>
+    <div class="canvas-container">
+      <canvas id="canvas" class="canvas"></canvas>
+    </div>
+    <thingSpace-axis id="vertical" direction="vertical" context="{{context}}"></thingSpace-axis>
+    <thingSpace-axis id="horizontal" title="Polymer"  direction="horizontal" context="{{context}}"></thingSpace-axis>
+    <thingSpace-thing id="thing1" title="C#" context="{{context}}" x="4" y="3"></thingSpace-thing>
+    <thingSpace-thing id="thing2" title="ASP.Net" context="{{context}}" x="-4" y="3"></thingSpace-thing>
+    <thingSpace-thing id="thing3" title="nodeJs" context="{{context}}" x="4" y="-3"></thingSpace-thing>
+    <thingSpace-thing id="thing4" title="Xamarin" context="{{context}}" x="4" y="6" arrow-x="6" arrow-y="5"></thingSpace-thing>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'thingSpace-container',
+
+      properties: {
+        context: {
+          type:Object,
+          value : function  () {
+            var canvas=this.$$("#canvas");
+            return canvas.getContext("2d");
+          }
+        },
+        width:{
+          type:Number
+        },
+        height:{
+          type:Number
+        }
+      },
+      attached:function  () {
+        this.context.canvas.width  = window.innerWidth - 500;
+        this.context.canvas.height = (window.innerWidth - 500) / 1.618;
+        this.height = this.context.canvas.height;
+        this.width = this.context.canvas.width;
+        this.draw();
+      },
+      ready:function  () {
+      },
+      draw : function (){
+        this.$.vertical.draw();
+        this.$.horizontal.draw();
+        this.$.thing1.draw();
+        this.$.thing2.draw();
+        this.$.thing3.draw();
+        this.$.thing4.draw();
+      },
+
+
+
+    });
+  })();
+  </script>
+</dom-module>

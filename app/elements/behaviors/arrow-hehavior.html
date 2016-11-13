@@ -1,0 +1,36 @@
+<script>
+ArrowheadBehavior = {
+      drawArrowhead:function(x,y,radians){
+            this.context.save();
+            this.context.beginPath();
+            this.context.translate(x,y);
+            this.context.rotate(radians);
+            this.context.moveTo(0,0);
+            this.context.lineTo(5,10);
+            this.context.lineTo(-5,10);
+            this.context.closePath();
+            this.context.restore();
+            this.context.fill();
+      },
+      drawLineWithArrow:function  (x1, y1, x2, y2) {
+        // arbitrary styling
+        this.context.strokeStyle='green';
+        this.context.fillStyle='green';
+        this.context.lineWidth=2;
+        
+        // draw the line
+        this.context.beginPath();
+        this.context.moveTo(x1,y1);
+        this.context.lineTo(x2,y2);
+        this.context.stroke();
+
+        var startRadians=Math.atan((y2-y1)/(x2-x1));
+        startRadians+=((x2>x1)?-90:90)*Math.PI/180;
+        this.drawArrowhead(x1,y1,startRadians); 
+
+        var endRadians=Math.atan((y2-y1)/(x2-x1));
+        endRadians+=((x2>x1)?90:-90)*Math.PI/180;
+        this.drawArrowhead(x2,y2,endRadians);                
+      }
+    };
+</script>
